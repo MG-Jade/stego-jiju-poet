@@ -11,9 +11,7 @@ def load_corpus(folder_path):
     corpus = {5: [], 7: []}
     pattern = re.compile(r"^poet\.(tang|song)\.\d+\.json$")
 
-    files = os.listdir(folder_path)
-
-    for file in files:
+    for file in os.listdir(folder_path):
 
         if not pattern.match(file):
             continue
@@ -24,12 +22,16 @@ def load_corpus(folder_path):
             data = json.load(f)
 
         for poem in data:
-            for line in poem.get("paragraphs", []):
+            for raw_line in poem.get("paragraphs", []):
 
-                line = convert(line, "zh-hans")
-                line = clean_line(line)
+                # 按标点拆分
+                parts = re.split(r"[，。！？]", raw_line)
 
-                if len(line) in (5, 7):
-                    corpus[len(line)].append(line)
+                for part in parts:
+                    line = convert(part, "zh-hans")
+                    line = clean_line(line)
+
+                    if len(line) in (5, 7):
+                        corpus[len(line)].append(line)
 
     return corpus
