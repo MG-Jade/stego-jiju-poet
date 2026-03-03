@@ -6,5 +6,5 @@
 
 使用方法：
 ```python
-main.py
+python main.py
 ```
