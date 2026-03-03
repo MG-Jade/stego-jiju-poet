@@ -5,6 +5,6 @@
 押韵：中华新韵
 
 使用方法：
-```python
+```
 python main.py
 ```
